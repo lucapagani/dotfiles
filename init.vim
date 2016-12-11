@@ -1,74 +1,78 @@
 """"""" Plugin management stuff """""""
-set nocompatible
-filetype off
+" set nocompatible
+" filetype off
+" set rtp+=~/.config/nvim/bundle/Vundle.vim
+" call vundle#begin('~/.config/nvim/bundle')
 
-set rtp+=~/.config/nvim/bundle/Vundle.vim
-call vundle#begin('~/.config/nvim/bundle')
+" Plugin 'VundleVim/Vundle.vim'
 
-Plugin 'VundleVim/Vundle.vim'
+" Specify a directory for plugins (for Neovim: ~/.local/share/nvim/plugged)
+call plug#begin('~/.config/nvim/plugged')
 
 " Custom plugins...
 " EasyMotion - Allows <leader><leader>(b|e) to jump to (b)eginning or (end)
 " of words.
-Plugin 'easymotion/vim-easymotion'
+Plug 'easymotion/vim-easymotion'
 " Ctrl-P - Fuzzy file search
-Plugin 'kien/ctrlp.vim'
+Plug 'kien/ctrlp.vim'
 " Neomake build tool (mapped below to <c-b>)
-Plugin 'benekastah/neomake'
+Plug 'benekastah/neomake'
 " Autocomplete for python
-Plugin 'davidhalter/jedi-vim'
+Plug 'davidhalter/jedi-vim', {'for': 'python'}
 " Remove extraneous whitespace when edit mode is exited
-Plugin 'thirtythreeforty/lessspace.vim'
+Plug 'thirtythreeforty/lessspace.vim'
 " Autocomplete
-Plugin 'Valloric/YouCompleteMe'
+Plug 'Valloric/YouCompleteMe', { 'do': './install.py --clang-completer' }
 
 " Screen splitter.  Cool, but doesn't work with nvim.
 "Plugin 'ervandew/screen'
 
 " LaTeX editing
-Plugin 'lervag/vimtex'
-" Plugin 'LaTeX-Box-Team/LaTeX-Box'
+Plug 'lervag/vimtex'
+" Plug 'LaTeX-Box-Team/LaTeX-Box'
 
 " Status bar mods
-Plugin 'vim-airline/vim-airline'
-Plugin 'vim-airline/vim-airline-themes'
-" Plugin 'airblade/vim-gitgutter'
-Plugin 'powerline/powerline'
-Plugin 'powerline/fonts'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+" Plug 'airblade/vim-gitgutter'
+Plug 'powerline/powerline'
+Plug 'powerline/fonts'
 
 " Color scheme
-Plugin 'freeo/vim-kalisi'
-Plugin 'morhetz/gruvbox'
+Plug 'freeo/vim-kalisi'
+Plug 'morhetz/gruvbox'
 
 " Tab completion
-" clugin 'ervandew/supertab'
+" clug 'ervandew/supertab'
 
 " Map the leader key to SPACE
 let mapleader="\<SPACE>"
 let maplocalleader="\<SPACE>"
 
 " Nerdcommenter
-Plugin 'scrooloose/nerdcommenter'
+Plug 'scrooloose/nerdcommenter'
 
 " Nerdtree
-Plugin 'scrooloose/nerdtree'
+Plug 'scrooloose/nerdtree'
 
 " Autopairs
-Plugin 'jiangmiao/auto-pairs'
+Plug 'jiangmiao/auto-pairs'
 
 " Doxygen
-Plugin 'vim-scripts/DoxygenToolkit.vim'
+Plug 'vim-scripts/DoxygenToolkit.vim'
 
 " ListToglle
-Plugin 'Valloric/ListToggle'
+Plug 'Valloric/ListToggle'
 
 " cmake
 " Plugin 'jalcine/cmake.vim'
-Plugin 'sigidagi/vim-cmake-project'
+Plug 'sigidagi/vim-cmake-project', { 'frozen': 1 }
 
 " After all plugins...
-call vundle#end()
-filetype plugin indent on
+" call vundle#end()
+" Add plugins to &runtimepath
+" filetype plugin indent on
+call plug#end()
 
 " Omnicomplete
 set omnifunc=syntaxcomplete#Complete
@@ -90,7 +94,8 @@ let g:jedi#show_call_signatures = "0"
 
 set showcmd             " Show (partial) command in status line.
 set showmatch           " Show matching brackets.
-set showmode            " Show current mode.
+" set showmode            " Show current mode.
+set noshowmode          " Don't show current mode.
 set ruler               " Show the line and column numbers of the cursor.
 set number              " Show the line numbers on the left side.
 set formatoptions+=o    " Continue comment marker in new lines.
@@ -218,7 +223,10 @@ let g:vimtex_latexmk_options = '-pdf -verbose -file-line-error -interaction=nons
 " let g:LatexBox_latexmk_options = "-recorder-"
 
 " YouComopleteMe
-let g:ycm_auto_trigger = 3
+let g:ycm_error_symbol = '✗'
+let g:ycm_warning_symbol = '⚠'
+let g:ycm_autoclose_preview_window_after_completion = 1
+let g:ycm_auto_trigger = 0
 let g:ycm_global_ycm_extra_conf = '~/.config/nvim/.ycm_extra_conf.py'
 let g:ycm_allow_changing_updatetime = 0
 let g:ycm_key_list_select_completion = ['<TAB>', '<Down>']
@@ -226,6 +234,7 @@ let g:ycm_key_list_previous_completion = ['<S-TAB>', '<Up>']
 let g:ycm_add_preview_to_completeopt = 1
 let g:ycm_always_populate_location_list = 1
 let g:ycm_filepath_completition_use_working_dir = 1
+let g:ycm_show_diagnostics_ui = 1
 
 " Add space gutter
 sign define dummy
