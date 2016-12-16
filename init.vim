@@ -1,10 +1,4 @@
-""""""" Plugin management stuff """""""
-" set nocompatible
-" filetype off
-" set rtp+=~/.config/nvim/bundle/Vundle.vim
-" call vundle#begin('~/.config/nvim/bundle')
-
-" Plugin 'VundleVim/Vundle.vim'
+" Plugin management stuff
 
 " Specify a directory for plugins (for Neovim: ~/.local/share/nvim/plugged)
 call plug#begin('~/.config/nvim/plugged')
@@ -28,7 +22,7 @@ Plug 'Valloric/YouCompleteMe', { 'do': './install.py --clang-completer' }
 "Plugin 'ervandew/screen'
 
 " LaTeX editing
-Plug 'lervag/vimtex'
+Plug 'lervag/vimtex', { 'for': 'tex' }
 " Plug 'LaTeX-Box-Team/LaTeX-Box'
 
 " Status bar mods
@@ -40,7 +34,9 @@ Plug 'powerline/fonts'
 
 " Color scheme
 Plug 'freeo/vim-kalisi'
-Plug 'morhetz/gruvbox'
+" Plug 'morhetz/gruvboxp'
+" Plug 'altercation/vim-colors-solarized'
+Plug 'octol/vim-cpp-enhanced-highlight'
 
 " Tab completion
 " clug 'ervandew/supertab'
@@ -68,10 +64,13 @@ Plug 'Valloric/ListToggle'
 " Plugin 'jalcine/cmake.vim'
 Plug 'sigidagi/vim-cmake-project', { 'frozen': 1 }
 
+" Thesaurus
+Plug 'beloglazov/vim-online-thesaurus'
+
+" R
+Plug 'jalvesaq/Nvim-R', { 'for': 'r' }
+
 " After all plugins...
-" call vundle#end()
-" Add plugins to &runtimepath
-" filetype plugin indent on
 call plug#end()
 
 " Omnicomplete
@@ -92,13 +91,17 @@ let g:jedi#show_call_signatures = "0"
 
 " let g:SuperTabCompletionContexts = ['g:ContextText2']
 
+let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+
+syntax on
 set showcmd             " Show (partial) command in status line.
 set showmatch           " Show matching brackets.
 " set showmode            " Show current mode.
 set noshowmode          " Don't show current mode.
 set ruler               " Show the line and column numbers of the cursor.
 set number              " Show the line numbers on the left side.
-set formatoptions+=o    " Continue comment marker in new lines.
+" set formatoptions+=r    " Continue comment marker in new lines.
+set formatoptions-=r formatoptions-=c formatoptions-=o
 set textwidth=0         " Hard-wrap long lines as you type them.
 set expandtab           " Insert spaces when TAB is pressed.
 set tabstop=2           " Render TABs using this many spaces.
@@ -179,8 +182,8 @@ nnoremap <Leader>b :CtrlPBuffer<CR>
 " Open most recently used files
 nnoremap <Leader>f :CtrlPMRUFiles<CR>
 " Move among buffers with CTRL
-map <C-K> :bnext<CR>
-map <C-J> :bprev<CR>
+map <C-J> :bnext<CR>
+map <C-K> :bprev<CR>
 
 " Delete without copy
 nnoremap <leader>d "_d
@@ -200,12 +203,17 @@ let g:airline_right_sep = ' '
 let g:airline_right_alt_sep = '|'
 " let g:airline_theme= 'grcvbox'
 let g:airline_theme= 'kalisi'
+" let g:airline_theme= 'solarized'
 " let g:bufferline_echo = 0
 
-colorscheme kalisi
 set background=dark
+" colorscheme solarized
+colorscheme kalisi
 " colorscheme gruvbox
-" set background=dark
+
+" cpp highlights
+let g:cpp_class_scope_highlight = 1
+let g:cpp_experimental_template_highlight = 1
 
 "" Tex
 let g:tex_flavor = 'latex'
@@ -213,7 +221,24 @@ let g:tex_flavor = 'latex'
 let g:vimtex_view_general_viewer = 'okular'
 let g:vimtex_view_general_options = '--unique @pdf\#src:@line@tex'
 let g:vimtex_latexmk_options = '-pdf -verbose -file-line-error -interaction=nonstopmode -synctex=1 -recorder-'
-" let g:vimtex_view_general_options_latexmk = '-recorder-'
+let g:vimtex_fold_enabled = 0
+let g:vimtex_quickfix_mode = 2
+let g:vimtex_quickfix_open_on_warning = 1
+let g:vimtex_toc_resize = 0
+
+if !exists('g:ycm_semantic_triggers')
+  let g:ycm_semantic_triggers = {}
+endif
+let g:ycm_semantic_triggers.tex = [
+  \ 're!\\[A-Za-z]*cite[A-Za-z]*(\[[^]]*\]){0,2}{[^}]*',
+  \ 're!\\[A-Za-z]*ref({[^}]*|range{([^,{}]*(}{)?))',
+  \ 're!\\hyperref\[[^]]*',
+  \ 're!\\includegraphics\*?(\[[^]]*\]){0,2}{[^}]*',
+  \ 're!\\(include(only)?|input){[^}]*',
+  \ 're!\\\a*(gls|Gls|GLS)(pl)?\a*(\s*\[[^]]*\]){0,2}\s*\{[^}]*',
+  \ 're!\\includepdf(\s*\[[^]]*\])?\s*\{[^}]*',
+  \ 're!\\includestandalone(\s*\[[^]]*\])?\s*\{[^}]*',
+  \ ]
 
 " let g:tex_flavor = 'latex'
 " "let g:LatexBox_latexmk_async = 1
@@ -241,21 +266,6 @@ sign define dummy
 execute 'sign place 9999 line=1 name=dummy buffer=' . bufnr('')
 autocmd BufEnter * sign define dummy
 autocmd BufEnter * execute 'sign place 9999 line=1 name=dummy buffer=' . bufnr('')
-
-if !exists('g:neocomplete#sources#omni#input_patterns')
-  let g:neocomplete#sources#omni#input_patterns = {}
-endif
-let g:neocomplete#sources#omni#input_patterns.tex =
-  \ '\v\\%('
-  \ . '\a*cite\a*%(\s*\[[^]]*\]){0,2}\s*\{[^}]*'
-  \ . '|\a*ref%(\s*\{[^}]*|range\s*\{[^,}]*%(}\{)?)'
-  \ . '|hyperref\s*\[[^]]*'
-  \ . '|includegraphics\*?%(\s*\[[^]]*\]){0,2}\s*\{[^}]*'
-  \ . '|%(include%(only)?|input)\s*\{[^}]*'
-  \ . '|\a*(gls|Gls|GLS)(pl)?\a*%(\s*\[[^]]*\]){0,2}\s*\{[^}]*'
-  \ . '|includepdf%(\s*\[[^]]*\])?\s*\{[^}]*'
-  \ . '|includestandalone%(\s*\[[^]]*\])?\s*\{[^}]*'
-  \ . ')'
 
 " " Copy to clipboard
 vnoremap  <leader>y  "+y
@@ -291,4 +301,9 @@ let g:NERDCompactSexyComs = 1
 " Lists toggle
 let g:lt_location_list_toggle_map = '<leader>l'
 let g:lt_quickfix_list_toggle_map = '<leader>q'
+
+" R
+let R_vsplit = 1
+let R_nvimpager = 'vertical'
+let R_assign = 0
 
