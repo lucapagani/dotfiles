@@ -23,7 +23,7 @@ Plug 'Valloric/YouCompleteMe', { 'do': './install.py --clang-completer' }
 
 " LaTeX editing
 Plug 'lervag/vimtex', { 'for': 'tex' }
-" Plug 'LaTeX-Box-Team/LaTeX-Box'
+" Plug 'LaTeX-Box-Team/LaTeX-Box', { 'for': 'tex' }
 
 " Status bar mods
 Plug 'vim-airline/vim-airline'
@@ -69,6 +69,9 @@ Plug 'beloglazov/vim-online-thesaurus'
 
 " R
 Plug 'jalvesaq/Nvim-R', { 'for': 'r' }
+
+" Autoformat
+Plug 'Chiel92/vim-autoformat'
 
 " After all plugins...
 call plug#end()
@@ -182,8 +185,8 @@ nnoremap <Leader>b :CtrlPBuffer<CR>
 " Open most recently used files
 nnoremap <Leader>f :CtrlPMRUFiles<CR>
 " Move among buffers with CTRL
-map <C-J> :bnext<CR>
-map <C-K> :bprev<CR>
+map <C-K> :bnext<CR>
+map <C-J> :bprev<CR>
 
 " Delete without copy
 nnoremap <leader>d "_d
@@ -215,11 +218,12 @@ colorscheme kalisi
 let g:cpp_class_scope_highlight = 1
 let g:cpp_experimental_template_highlight = 1
 
-"" Tex
+" Tex
 let g:tex_flavor = 'latex'
 " let g:vimtex_view_method = 'mupdf'
 let g:vimtex_view_general_viewer = 'okular'
-let g:vimtex_view_general_options = '--unique @pdf\#src:@line@tex'
+let g:vimtex_view_general_options = '--unique file:@pdf\#src:@line@tex'
+let g:vimtex_view_general_options_latexmk = '--unique'
 let g:vimtex_latexmk_options = '-pdf -verbose -file-line-error -interaction=nonstopmode -synctex=1 -recorder-'
 let g:vimtex_fold_enabled = 0
 let g:vimtex_quickfix_mode = 2
@@ -241,11 +245,12 @@ let g:ycm_semantic_triggers.tex = [
   \ ]
 
 " let g:tex_flavor = 'latex'
-" "let g:LatexBox_latexmk_async = 1
+" " let g:LatexBox_latexmk_async = 1
 " let g:LatexBox_latexmk_preview_continuously = 1
 " let g:LatexBox_quickfix = 2
 " let g:LatexBox_viewer = "okular --unique"
-" let g:LatexBox_latexmk_options = "-recorder-"
+" " let g:LatexBox_latexmk_options = "-recorder-"
+" let g:LatexBox_latexmk_options = '-pdf -verbose -file-line-error -interaction=nonstopmode -synctex=1 -recorder-'
 
 " YouComopleteMe
 let g:ycm_error_symbol = '✗'
@@ -306,4 +311,35 @@ let g:lt_quickfix_list_toggle_map = '<leader>q'
 let R_vsplit = 1
 let R_nvimpager = 'vertical'
 let R_assign = 0
+
+" Terminal colours
+let g:terminal_color_0  = '#2e3436'
+let g:terminal_color_1  = '#cc0000'
+let g:terminal_color_2  = '#4e9a06'
+let g:terminal_color_3  = '#c4a000'
+let g:terminal_color_4  = '#3465a4'
+let g:terminal_color_5  = '#75507b'
+let g:terminal_color_6  = '#0b939b'
+let g:terminal_color_7  = '#d3d7cf'
+let g:terminal_color_8  = '#555753'
+let g:terminal_color_9  = '#ef2929'
+let g:terminal_color_10 = '#8ae234'
+let g:terminal_color_11 = '#fce94f'
+let g:terminal_color_12 = '#729fcf'
+let g:terminal_color_13 = '#ad7fa8'
+let g:terminal_color_14 = '#00f5e9'
+let g:terminal_color_15 = '#eeeeec'
+
+" Autoformat
+noremap <F3> :Autoformat<CR>
+
+let b:formatdef_custom_cpp='"astyle --mode=c -A14 --indent=spaces=2"'
+let b:formatters_cpp = ['custom_cpp']
+
+let b:formatdef_custom_c='"astyle --mode=c -A14 --indent=spaces=2"'
+let b:formatters_c = ['custom_c']
+
+let g:autoformat_autoindent = 0
+let g:autoformat_retab = 0
+let g:autoformat_remove_trailing_spaces = 0
 
