@@ -7,16 +7,27 @@ call plug#begin('~/.config/nvim/plugged')
 " EasyMotion - Allows <leader><leader>(b|e) to jump to (b)eginning or (end)
 " of words.
 Plug 'easymotion/vim-easymotion'
+
 " Ctrl-P - Fuzzy file search
 Plug 'kien/ctrlp.vim'
+
 " Neomake build tool (mapped below to <c-b>)
-Plug 'benekastah/neomake'
+" Plug 'benekastah/neomake'
+
 " Autocomplete for python
 Plug 'davidhalter/jedi-vim', {'for': 'python'}
+
 " Remove extraneous whitespace when edit mode is exited
 Plug 'thirtythreeforty/lessspace.vim'
+
 " Autocomplete
 Plug 'Valloric/YouCompleteMe', { 'do': './install.py --clang-completer' }
+" YouCompleteMe generator
+Plug 'rdnetto/YCM-Generator', { 'branch': 'stable'}
+
+" Color coded
+" Plug 'jeaye/color_coded'
+Plug 'octol/vim-cpp-enhanced-highlight'
 
 " Screen splitter.  Cool, but doesn't work with nvim.
 "Plugin 'ervandew/screen'
@@ -39,11 +50,7 @@ Plug 'freeo/vim-kalisi'
 Plug 'octol/vim-cpp-enhanced-highlight'
 
 " Tab completion
-" clug 'ervandew/supertab'
-
-" Map the leader key to SPACE
-let mapleader="\<SPACE>"
-let maplocalleader="\<SPACE>"
+" Plug 'ervandew/supertab'
 
 " Nerdcommenter
 Plug 'scrooloose/nerdcommenter'
@@ -73,8 +80,15 @@ Plug 'jalvesaq/Nvim-R', { 'for': 'r' }
 " Autoformat
 Plug 'Chiel92/vim-autoformat'
 
+" Switch between header and source
+" Plug 'vim-scripts/a.vim'
+
 " After all plugins...
 call plug#end()
+
+" Map the leader key to SPACE
+let mapleader="\<SPACE>"
+let maplocalleader="\<SPACE>"
 
 " Omnicomplete
 set omnifunc=syntaxcomplete#Complete
@@ -82,7 +96,6 @@ set omnifunc=syntaxcomplete#Complete
 """"""" Jedi-VIM """""""
 " Don't mess up undo history
 let g:jedi#show_call_signatures = "0"
-
 
 """"""" SuperTab configuration """""""
 " let g:SuperTabDefaultCompletionType = "<c-x><c-u>"
@@ -272,13 +285,13 @@ execute 'sign place 9999 line=1 name=dummy buffer=' . bufnr('')
 autocmd BufEnter * sign define dummy
 autocmd BufEnter * execute 'sign place 9999 line=1 name=dummy buffer=' . bufnr('')
 
-" " Copy to clipboard
+" Copy to clipboard
 vnoremap  <leader>y  "+y
 nnoremap  <leader>Y  "+yg_
 nnoremap  <leader>y  "+y
 nnoremap  <leader>yy  "+yy
 
-" " Paste from clipboard
+" Paste from clipboard
 nnoremap <leader>p "+p
 nnoremap <leader>P "+P
 vnoremap <leader>p "+p
@@ -342,4 +355,9 @@ let b:formatters_c = ['custom_c']
 let g:autoformat_autoindent = 0
 let g:autoformat_retab = 0
 let g:autoformat_remove_trailing_spaces = 0
+
+" C++ color
+let g:cpp_class_scope_highlight = 1
+let g:cpp_experimental_template_highlight = 1
+let g:cpp_concepts_highlight = 1
 
