@@ -28,6 +28,7 @@ Plug 'rdnetto/YCM-Generator', { 'branch': 'stable'}
 " Color coded
 " Plug 'jeaye/color_coded'
 Plug 'octol/vim-cpp-enhanced-highlight'
+" Plug 'arakashic/chromatica.nvim'
 
 " Screen splitter.  Cool, but doesn't work with nvim.
 "Plugin 'ervandew/screen'
@@ -37,17 +38,16 @@ Plug 'lervag/vimtex', { 'for': 'tex' }
 " Plug 'LaTeX-Box-Team/LaTeX-Box', { 'for': 'tex' }
 
 " Status bar mods
+Plug 'powerline/powerline'
+Plug 'powerline/fonts'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 " Plug 'airblade/vim-gitgutter'
-Plug 'powerline/powerline'
-Plug 'powerline/fonts'
 
 " Color scheme
 Plug 'freeo/vim-kalisi'
 " Plug 'morhetz/gruvboxp'
 " Plug 'altercation/vim-colors-solarized'
-Plug 'octol/vim-cpp-enhanced-highlight'
 
 " Tab completion
 " Plug 'ervandew/supertab'
@@ -85,6 +85,7 @@ Plug 'Chiel92/vim-autoformat'
 
 " After all plugins...
 call plug#end()
+filetype plugin indent on
 
 " Map the leader key to SPACE
 let mapleader="\<SPACE>"
@@ -103,11 +104,13 @@ let g:jedi#show_call_signatures = "0"
     " return "\<c-x>\<c-p>"
 " endfunction
 
-" " call SuperTabChain(Completefunc, '<c-n>')
+" call SuperTabChain(Completefunc, '<c-n>')
 
 " let g:SuperTabCompletionContexts = ['g:ContextText2']
 
 let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+
+autocmd FileType * setlocal formatoptions-=ro
 
 syntax on
 set showcmd             " Show (partial) command in status line.
@@ -116,19 +119,24 @@ set showmatch           " Show matching brackets.
 set noshowmode          " Don't show current mode.
 set ruler               " Show the line and column numbers of the cursor.
 set number              " Show the line numbers on the left side.
-" set formatoptions+=r    " Continue comment marker in new lines.
-set formatoptions-=r formatoptions-=c formatoptions-=o
 set textwidth=0         " Hard-wrap long lines as you type them.
 set expandtab           " Insert spaces when TAB is pressed.
 set tabstop=2           " Render TABs using this many spaces.
 set shiftwidth=2        " Indentation amount for < and > commands.
 set updatetime=500      " Set update time
+set clipboard=unnamed   " Unnamed register
 
 set noerrorbells        " No beeps.
 set modeline            " Enable modeline.
 set esckeys             " Cursor keys in insert mode.
 set linespace=0         " Set line-spacing to minimum.
 set nojoinspaces        " Prevents inserting two spaces after punctuation on a join (J)
+
+set wildmode=longest,list,full " Autocompletion command line
+set wildmenu
+
+set foldmethod=indent   " Folding
+set foldlevelstart=99
 
 " More natural splits
 set splitbelow          " Horizontal split below current.
@@ -202,13 +210,50 @@ map <C-K> :bnext<CR>
 map <C-J> :bprev<CR>
 
 " Delete without copy
-nnoremap <leader>d "_d
-vnoremap <leader>d "_d
-vnoremap <leader>p "_dP
+" nnoremap <leader>d "_d
+" vnoremap <leader>d "_d
+" vnoremap <leader>p "_dP
+nnoremap d "_d
+vnoremap d "_d
+vnoremap p "_dP
 
+" Copy to clipboard
+vnoremap  <leader>y  "+y
+nnoremap  <leader>Y  "+yg_
+nnoremap  <leader>y  "+y
+nnoremap  <leader>yy  "+yy
+
+" Paste from clipboard
+nnoremap <leader>p "+p
+nnoremap <leader>P "+P
+vnoremap <leader>p "+p
+vnoremap <leader>P "+P
+
+" Terminal remap
+tnoremap <Esc> <C-\><C-n>
+tnoremap <A-h> <C-\><C-n><C-w>h
+tnoremap <A-j> <C-\><C-n><C-w>j
+tnoremap <A-k> <C-\><C-n><C-w>k
+tnoremap <A-l> <C-\><C-n><C-w>l
+
+" Remap windows navigation
+nnoremap <A-h> <C-w>h
+nnoremap <A-j> <C-w>j
+nnoremap <A-k> <C-w>k
+nnoremap <A-l> <C-w>l
+
+" Airline
+set laststatus=2
+" let g:airline_powerline_fonts = 1                           " Use Powerline fonts to show beautiful symbols
+let g:airline_inactive_collapse = 0                         " Do not collapse the status line while having multiple windows
+let g:airline#extensions#whitespace#enabled = 0             " Do not check for whitespaces
+let g:airline#extensions#tabline#enabled = 1                " Display tab bar with buffers
+let g:airline#extensions#branch#enabled = 1                 " Enable Git client integration
+let g:airline#extensions#tagbar#enabled = 1                 " Enable Tagbar integration
+let g:airline#extensions#hunks#enabled = 1                  " Enable Git hunks integration
 " let g:airline_powerline_fonts = 1
-let g:airline#extensions#tabline#enabled = 2
-let g:airline#extensions#tabline#fnamemod = ':t'
+" let g:airline#extensions#tabline#enabled = 2
+" let g:airline#extensions#tabline#fnamemod = ':t'
 let g:airline#extensions#tabline#left_sep = ' '
 let g:airline#extensions#tabline#left_alt_sep = '|'
 let g:airline#extensions#tabline#right_sep = ' '
@@ -226,10 +271,6 @@ set background=dark
 " colorscheme solarized
 colorscheme kalisi
 " colorscheme gruvbox
-
-" cpp highlights
-let g:cpp_class_scope_highlight = 1
-let g:cpp_experimental_template_highlight = 1
 
 " Tex
 let g:tex_flavor = 'latex'
@@ -285,31 +326,6 @@ execute 'sign place 9999 line=1 name=dummy buffer=' . bufnr('')
 autocmd BufEnter * sign define dummy
 autocmd BufEnter * execute 'sign place 9999 line=1 name=dummy buffer=' . bufnr('')
 
-" Copy to clipboard
-vnoremap  <leader>y  "+y
-nnoremap  <leader>Y  "+yg_
-nnoremap  <leader>y  "+y
-nnoremap  <leader>yy  "+yy
-
-" Paste from clipboard
-nnoremap <leader>p "+p
-nnoremap <leader>P "+P
-vnoremap <leader>p "+p
-vnoremap <leader>P "+P
-
-" Terminal remap
-tnoremap <Esc> <C-\><C-n>
-tnoremap <A-h> <C-\><C-n><C-w>h
-tnoremap <A-j> <C-\><C-n><C-w>j
-tnoremap <A-k> <C-\><C-n><C-w>k
-tnoremap <A-l> <C-\><C-n><C-w>l
-
-" Remap windows navigation
-nnoremap <A-h> <C-w>h
-nnoremap <A-j> <C-w>j
-nnoremap <A-k> <C-w>k
-nnoremap <A-l> <C-w>l
-
 " Nerdcommenter
 " Add spaces after comment delimiters by default
 let g:NERDSpaceDelims = 1
@@ -321,27 +337,9 @@ let g:lt_location_list_toggle_map = '<leader>l'
 let g:lt_quickfix_list_toggle_map = '<leader>q'
 
 " R
-let R_vsplit = 1
+" let R_vsplit = 1
 let R_nvimpager = 'vertical'
 let R_assign = 0
-
-" Terminal colours
-let g:terminal_color_0  = '#2e3436'
-let g:terminal_color_1  = '#cc0000'
-let g:terminal_color_2  = '#4e9a06'
-let g:terminal_color_3  = '#c4a000'
-let g:terminal_color_4  = '#3465a4'
-let g:terminal_color_5  = '#75507b'
-let g:terminal_color_6  = '#0b939b'
-let g:terminal_color_7  = '#d3d7cf'
-let g:terminal_color_8  = '#555753'
-let g:terminal_color_9  = '#ef2929'
-let g:terminal_color_10 = '#8ae234'
-let g:terminal_color_11 = '#fce94f'
-let g:terminal_color_12 = '#729fcf'
-let g:terminal_color_13 = '#ad7fa8'
-let g:terminal_color_14 = '#00f5e9'
-let g:terminal_color_15 = '#eeeeec'
 
 " Autoformat
 noremap <F3> :Autoformat<CR>
@@ -356,8 +354,22 @@ let g:autoformat_autoindent = 0
 let g:autoformat_retab = 0
 let g:autoformat_remove_trailing_spaces = 0
 
+" NerdTree
+map <C-n> :NERDTreeToggle<CR>
+
+" Autoformat
+let b:formatdef_custom_c='"astyle"'
+let b:formatters_c = ['custom_c']
+let b:formatdef_custom_cpp = '"astyle"'
+let b:formatters_cpp = ['custom_cpp']
+
 " C++ color
 let g:cpp_class_scope_highlight = 1
 let g:cpp_experimental_template_highlight = 1
 let g:cpp_concepts_highlight = 1
+
+" Chromatica
+" let g:chromatica#libclang_path='/usr/lib/rstudio/bin/rsclang/'
+" let g:chromatica#enable_at_startup=1
+" let g:chromatica#highlight_feature_level=1
 
