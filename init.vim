@@ -27,8 +27,8 @@ Plug 'rdnetto/YCM-Generator', { 'branch': 'stable'}
 
 " Color coded
 " Plug 'jeaye/color_coded'
-Plug 'octol/vim-cpp-enhanced-highlight'
-" Plug 'arakashic/chromatica.nvim'
+" Plug 'octol/vim-cpp-enhanced-highlight'
+Plug 'arakashic/chromatica.nvim'
 
 " Screen splitter.  Cool, but doesn't work with nvim.
 "Plugin 'ervandew/screen'
@@ -364,12 +364,12 @@ let b:formatdef_custom_cpp = '"astyle"'
 let b:formatters_cpp = ['custom_cpp']
 
 " C++ color
-let g:cpp_class_scope_highlight = 1
-let g:cpp_experimental_template_highlight = 1
-let g:cpp_concepts_highlight = 1
+" let g:cpp_class_scope_highlight = 1
+" let g:cpp_experimental_template_highlight = 1
+" let g:cpp_concepts_highlight = 1
 
 " Chromatica
-" let g:chromatica#libclang_path='/usr/lib/rstudio/bin/rsclang/'
-" let g:chromatica#enable_at_startup=1
-" let g:chromatica#highlight_feature_level=1
+let g:chromatica#libclang_path='/usr/lib/rstudio/bin/rsclang/'
+let g:chromatica#enable_at_startup=1
+let g:chromatica#highlight_feature_level=1
 
