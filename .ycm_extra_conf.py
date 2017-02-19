@@ -14,10 +14,11 @@ BASE_FLAGS = [
     #  '-ferror-limit=10000',
     '-DNDEBUG',
     '-std=c++11',
-    #  '-xc++',
+    '-xc++',
     '-I/usr/lib/',
     '-I/usr/include/',
-    '-I/usr/include/c++/6.2.1/'
+    '-I./include',
+    '-I../include'
 ]
 
 SOURCE_EXTENSIONS = [

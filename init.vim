@@ -20,6 +20,11 @@ Plug 'davidhalter/jedi-vim', {'for': 'python'}
 " Remove extraneous whitespace when edit mode is exited
 Plug 'thirtythreeforty/lessspace.vim'
 
+" " Deopete
+" Plug 'Shougo/deoplete.nvim'
+" " vim-clang
+" Plug 'justmao945/vim-clang'
+
 " Autocomplete
 Plug 'Valloric/YouCompleteMe', { 'do': './install.py --clang-completer' }
 " YouCompleteMe generator
@@ -27,8 +32,8 @@ Plug 'rdnetto/YCM-Generator', { 'branch': 'stable'}
 
 " Color coded
 " Plug 'jeaye/color_coded'
-" Plug 'octol/vim-cpp-enhanced-highlight'
-Plug 'arakashic/chromatica.nvim'
+Plug 'octol/vim-cpp-enhanced-highlight'
+" Plug 'arakashic/chromatica.nvim'
 
 " Screen splitter.  Cool, but doesn't work with nvim.
 "Plugin 'ervandew/screen'
@@ -124,7 +129,7 @@ set expandtab           " Insert spaces when TAB is pressed.
 set tabstop=2           " Render TABs using this many spaces.
 set shiftwidth=2        " Indentation amount for < and > commands.
 set updatetime=500      " Set update time
-set clipboard=unnamed   " Unnamed register
+set clipboard+=unnamed   " Unnamed register
 
 set noerrorbells        " No beeps.
 set modeline            " Enable modeline.
@@ -210,9 +215,6 @@ map <C-K> :bnext<CR>
 map <C-J> :bprev<CR>
 
 " Delete without copy
-" nnoremap <leader>d "_d
-" vnoremap <leader>d "_d
-" vnoremap <leader>p "_dP
 nnoremap d "_d
 vnoremap d "_d
 vnoremap p "_dP
@@ -309,8 +311,9 @@ let g:ycm_semantic_triggers.tex = [
 " YouComopleteMe
 let g:ycm_error_symbol = '✗'
 let g:ycm_warning_symbol = '⚠'
-let g:ycm_autoclose_preview_window_after_completion = 1
+let g:ycm_autoclose_preview_window_after_completion = 0
 let g:ycm_auto_trigger = 0
+let g:ycm_min_num_of_chars_for_completion = 3
 let g:ycm_global_ycm_extra_conf = '~/.config/nvim/.ycm_extra_conf.py'
 let g:ycm_allow_changing_updatetime = 0
 let g:ycm_key_list_select_completion = ['<TAB>', '<Down>']
@@ -319,6 +322,20 @@ let g:ycm_add_preview_to_completeopt = 1
 let g:ycm_always_populate_location_list = 1
 let g:ycm_filepath_completition_use_working_dir = 1
 let g:ycm_show_diagnostics_ui = 1
+let g:ycm_filetype_whitelist = { '*': 1 }
+let g:ycm_key_invoke_completion = '<TAB>'
+let g:ycm_complete_in_strings = 1
+
+nnoremap <F11> :YcmForceCompileAndDiagnostics <CR>
+
+" Deopete
+let g:deoplete#enable_at_startup = 1
+" vim-clang
+let g:clang_library_path='/usr/lib/'
+let g:clang_compilation_database = './build'
+let g:clang_c_options = ''
+let g:clang_cpp_options = '-std=c++11'
+let g:clang_include_sysheaders = 1
 
 " Add space gutter
 sign define dummy
@@ -369,7 +386,8 @@ let b:formatters_cpp = ['custom_cpp']
 " let g:cpp_concepts_highlight = 1
 
 " Chromatica
-let g:chromatica#libclang_path='/usr/lib/rstudio/bin/rsclang/'
+let g:chromatica#libclang_path='/usr/lib/'
 let g:chromatica#enable_at_startup=1
-let g:chromatica#highlight_feature_level=1
+let g:chromatica#highlight_feature_level=2
+let g:chromatica#responsive_mode=1
 
