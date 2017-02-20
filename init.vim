@@ -51,7 +51,7 @@ Plug 'vim-airline/vim-airline-themes'
 
 " Color scheme
 Plug 'freeo/vim-kalisi'
-" Plug 'morhetz/gruvboxp'
+Plug 'morhetz/gruvbox'
 " Plug 'altercation/vim-colors-solarized'
 
 " Tab completion
@@ -73,7 +73,7 @@ Plug 'vim-scripts/DoxygenToolkit.vim'
 Plug 'Valloric/ListToggle'
 
 " cmake
-" Plugin 'jalcine/cmake.vim'
+" Plug 'jalcine/cmake.vim'
 Plug 'sigidagi/vim-cmake-project', { 'frozen': 1 }
 
 " Thesaurus
@@ -85,8 +85,13 @@ Plug 'jalvesaq/Nvim-R', { 'for': 'r' }
 " Autoformat
 Plug 'Chiel92/vim-autoformat'
 
-" Switch between header and source
-" Plug 'vim-scripts/a.vim'
+" Close buffers
+Plug 'qpkorr/vim-bufkill'
+
+" Utilsnips
+Plug 'SirVer/ultisnips'
+" Snippets are separated from the engine. Add this if you want them:
+Plug 'honza/vim-snippets'
 
 " After all plugins...
 call plug#end()
@@ -120,8 +125,8 @@ autocmd FileType * setlocal formatoptions-=ro
 syntax on
 set showcmd             " Show (partial) command in status line.
 set showmatch           " Show matching brackets.
-" set showmode            " Show current mode.
-set noshowmode          " Don't show current mode.
+set showmode            " Show current mode.
+" set noshowmode          " Don't show current mode.
 set ruler               " Show the line and column numbers of the cursor.
 set number              " Show the line numbers on the left side.
 set textwidth=0         " Hard-wrap long lines as you type them.
@@ -130,10 +135,10 @@ set tabstop=2           " Render TABs using this many spaces.
 set shiftwidth=2        " Indentation amount for < and > commands.
 set updatetime=500      " Set update time
 set clipboard+=unnamed   " Unnamed register
+set mouse=a             " Enable mouse
 
 set noerrorbells        " No beeps.
 set modeline            " Enable modeline.
-set esckeys             " Cursor keys in insert mode.
 set linespace=0         " Set line-spacing to minimum.
 set nojoinspaces        " Prevents inserting two spaces after punctuation on a join (J)
 
@@ -264,7 +269,7 @@ let g:airline_left_sep = ' '
 let g:airline_left_alt_sep = '|'
 let g:airline_right_sep = ' '
 let g:airline_right_alt_sep = '|'
-" let g:airline_theme= 'grcvbox'
+" let g:airline_theme= 'gruvbox'
 let g:airline_theme= 'kalisi'
 " let g:airline_theme= 'solarized'
 " let g:bufferline_echo = 0
@@ -273,6 +278,7 @@ set background=dark
 " colorscheme solarized
 colorscheme kalisi
 " colorscheme gruvbox
+" let g:gruvbox_contrast_dark = 'hard'
 
 " Tex
 let g:tex_flavor = 'latex'
@@ -312,7 +318,7 @@ let g:ycm_semantic_triggers.tex = [
 let g:ycm_error_symbol = '✗'
 let g:ycm_warning_symbol = '⚠'
 let g:ycm_autoclose_preview_window_after_completion = 0
-let g:ycm_auto_trigger = 0
+let g:ycm_auto_trigger = 3
 let g:ycm_min_num_of_chars_for_completion = 3
 let g:ycm_global_ycm_extra_conf = '~/.config/nvim/.ycm_extra_conf.py'
 let g:ycm_allow_changing_updatetime = 0
@@ -328,14 +334,14 @@ let g:ycm_complete_in_strings = 1
 
 nnoremap <F11> :YcmForceCompileAndDiagnostics <CR>
 
-" Deopete
-let g:deoplete#enable_at_startup = 1
-" vim-clang
-let g:clang_library_path='/usr/lib/'
-let g:clang_compilation_database = './build'
-let g:clang_c_options = ''
-let g:clang_cpp_options = '-std=c++11'
-let g:clang_include_sysheaders = 1
+" " Deopete
+" let g:deoplete#enable_at_startup = 1
+" " vim-clang
+" let g:clang_library_path='/usr/lib/'
+" let g:clang_compilation_database = './build'
+" let g:clang_c_options = ''
+" let g:clang_cpp_options = '-std=c++11'
+" let g:clang_include_sysheaders = 1
 
 " Add space gutter
 sign define dummy
@@ -381,13 +387,20 @@ let b:formatdef_custom_cpp = '"astyle"'
 let b:formatters_cpp = ['custom_cpp']
 
 " C++ color
-" let g:cpp_class_scope_highlight = 1
-" let g:cpp_experimental_template_highlight = 1
-" let g:cpp_concepts_highlight = 1
+let g:cpp_class_scope_highlight = 1
+let g:cpp_experimental_template_highlight = 1
+let g:cpp_concepts_highlight = 1
 
-" Chromatica
-let g:chromatica#libclang_path='/usr/lib/'
-let g:chromatica#enable_at_startup=1
-let g:chromatica#highlight_feature_level=2
-let g:chromatica#responsive_mode=1
+" Clamp
+" let g:clamp_autostart = 1
+" let g:clamp_highlight_blacklist = ['clampNamespaceRef', 'clampFunctionDecl', 'clampFieldDecl', 'clampDeclRefExprCall', 'clampMemberRefExprCall', 'clampMemberRefExprVar', 'clampNamespace', 'clampNamespaceRef', 'cligherInclusionDirective', 'clampVarDecl']
+" let g:clamp_highlight_mode = 0
+
+" Utilsnips
+" Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
+" let g:UltiSnipsExpandTrigger="<tab>"
+let g:UltiSnipsJumpForwardTrigger="<c-b>"
+let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+" If you want :UltiSnipsEdit to split your window.
+let g:UltiSnipsEditSplit="vertical"
 
