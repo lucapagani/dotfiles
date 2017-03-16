@@ -7,95 +7,76 @@ call plug#begin('~/.config/nvim/plugged')
 " EasyMotion - Allows <leader><leader>(b|e) to jump to (b)eginning or (end)
 " of words.
 Plug 'easymotion/vim-easymotion'
-
 " Ctrl-P - Fuzzy file search
 Plug 'kien/ctrlp.vim'
-
-" Neomake build tool (mapped below to <c-b>)
-" Plug 'benekastah/neomake'
-
 " Autocomplete for python
 Plug 'davidhalter/jedi-vim', {'for': 'python'}
-
 " Remove extraneous whitespace when edit mode is exited
 Plug 'thirtythreeforty/lessspace.vim'
-
-" " Deopete
-" Plug 'Shougo/deoplete.nvim'
-" " vim-clang
-" Plug 'justmao945/vim-clang'
-
 " Autocomplete
 Plug 'Valloric/YouCompleteMe', { 'do': './install.py --clang-completer' }
+" Plug 'zchee/deoplete-clang', { 'for': 'tex' }
 " YouCompleteMe generator
 Plug 'rdnetto/YCM-Generator', { 'branch': 'stable'}
-
 " Color coded
 " Plug 'jeaye/color_coded'
 Plug 'octol/vim-cpp-enhanced-highlight'
 " Plug 'arakashic/chromatica.nvim'
-
-" Screen splitter.  Cool, but doesn't work with nvim.
-"Plugin 'ervandew/screen'
-
 " LaTeX editing
 Plug 'lervag/vimtex', { 'for': 'tex' }
-" Plug 'LaTeX-Box-Team/LaTeX-Box', { 'for': 'tex' }
-
 " Status bar mods
-Plug 'powerline/powerline'
-Plug 'powerline/fonts'
+" Plug 'powerline/powerline'
+" Plug 'powerline/fonts'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-" Plug 'airblade/vim-gitgutter'
-
 " Color scheme
 Plug 'freeo/vim-kalisi'
-Plug 'morhetz/gruvbox'
-" Plug 'altercation/vim-colors-solarized'
-
-" Tab completion
-" Plug 'ervandew/supertab'
-
 " Nerdcommenter
 Plug 'scrooloose/nerdcommenter'
-
 " Nerdtree
 Plug 'scrooloose/nerdtree'
-
 " Autopairs
 Plug 'jiangmiao/auto-pairs'
-
 " Doxygen
 Plug 'vim-scripts/DoxygenToolkit.vim'
-
 " ListToglle
 Plug 'Valloric/ListToggle'
-
 " cmake
 " Plug 'jalcine/cmake.vim'
 Plug 'sigidagi/vim-cmake-project', { 'frozen': 1 }
-
 " Thesaurus
 Plug 'beloglazov/vim-online-thesaurus'
-
 " R
 Plug 'jalvesaq/Nvim-R', { 'for': 'r' }
-
 " Autoformat
 Plug 'Chiel92/vim-autoformat'
-
 " Close buffers
 Plug 'qpkorr/vim-bufkill'
-
-" Utilsnips
+" " Utilsnips
 Plug 'SirVer/ultisnips'
+" " Neosnippet
+" Plug 'Shougo/neosnippet'
+" Plug 'Shougo/neosnippet-snippets'
 " Snippets are separated from the engine. Add this if you want them:
 Plug 'honza/vim-snippets'
+" " Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
+let g:UltiSnipsExpandTrigger = "<c-j>"
+let g:UltiSnipsJumpForwardTrigger = "<c-j>"
+let g:UltiSnipsJumpBackwardTrigger = "<c-k>"
+" If you want :UltiSnipsEdit to split your window.
+let g:UltiSnipsEditSplit="vertical"
+let g:UltiSnipsUsePythonVersion = 2
+" Denite
+Plug 'Shougo/denite.nvim'
+" Debug
+Plug 'critiqjo/lldb.nvim'
 
 " After all plugins...
 call plug#end()
-filetype plugin indent on
+
+" Map : to ;
+noremap ; :
+noremap : ;
 
 " Map the leader key to SPACE
 let mapleader="\<SPACE>"
@@ -108,19 +89,9 @@ set omnifunc=syntaxcomplete#Complete
 " Don't mess up undo history
 let g:jedi#show_call_signatures = "0"
 
-""""""" SuperTab configuration """""""
-" let g:SuperTabDefaultCompletionType = "<c-x><c-u>"
-" function! Completefunc(findstart, base)
-    " return "\<c-x>\<c-p>"
-" endfunction
-
-" call SuperTabChain(Completefunc, '<c-n>')
-
-" let g:SuperTabCompletionContexts = ['g:ContextText2']
-
 let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 
-autocmd FileType * setlocal formatoptions-=ro
+" autocmd FileType * setlocal formatoptions-=ro
 
 syntax on
 set showcmd             " Show (partial) command in status line.
@@ -136,6 +107,7 @@ set shiftwidth=2        " Indentation amount for < and > commands.
 set updatetime=500      " Set update time
 set clipboard+=unnamed   " Unnamed register
 set mouse=a             " Enable mouse
+set hid
 
 set noerrorbells        " No beeps.
 set modeline            " Enable modeline.
@@ -192,8 +164,14 @@ augroup terminal
   autocmd TermOpen * setlocal nospell
 augroup END
 
+" Set .h c++ files
+augroup project
+  autocmd!
+  autocmd BufRead,BufNewFile *.h,*.c,*.hpp,*.cpp,*.hxx,*.cxx,*.hh,*.cc set filetype=cpp.doxygen
+augroup END
+
 " Search and Replace
-nmap <Leader>s :%s//g<Left><Left>
+nnoremap <Leader>s :%s/\<<C-r><C-w>\>//<Left>
 
 " Relative numbering
 set rnu
@@ -207,17 +185,17 @@ function! NumberToggle()
 endfunc
 
 " Toggle between normal and relative numbering.
-nnoremap <leader>r :call NumberToggle()<cr>
+nnoremap <leader>rn ;call NumberToggle()<cr>
 
 " Open file menu
-nnoremap <Leader>o :CtrlP<CR>
+nnoremap <Leader>o ;CtrlP<CR>
 " Open buffer menu
-nnoremap <Leader>b :CtrlPBuffer<CR>
+nnoremap <Leader>b ;CtrlPBuffer<CR>
 " Open most recently used files
-nnoremap <Leader>f :CtrlPMRUFiles<CR>
+nnoremap <Leader>f ;CtrlPMRUFiles<CR>
 " Move among buffers with CTRL
-map <C-K> :bnext<CR>
-map <C-J> :bprev<CR>
+map <C-K> ;bnext<CR>
+map <C-J> ;bprev<CR>
 
 " Delete without copy
 nnoremap d "_d
@@ -230,11 +208,11 @@ nnoremap  <leader>Y  "+yg_
 nnoremap  <leader>y  "+y
 nnoremap  <leader>yy  "+yy
 
-" Paste from clipboard
-nnoremap <leader>p "+p
-nnoremap <leader>P "+P
-vnoremap <leader>p "+p
-vnoremap <leader>P "+P
+" " Paste from clipboard
+" nnoremap <leader>p "+p
+" nnoremap <leader>P "+P
+" vnoremap <leader>p "+p
+" vnoremap <leader>P "+P
 
 " Terminal remap
 tnoremap <Esc> <C-\><C-n>
@@ -258,9 +236,6 @@ let g:airline#extensions#tabline#enabled = 1                " Display tab bar wi
 let g:airline#extensions#branch#enabled = 1                 " Enable Git client integration
 let g:airline#extensions#tagbar#enabled = 1                 " Enable Tagbar integration
 let g:airline#extensions#hunks#enabled = 1                  " Enable Git hunks integration
-" let g:airline_powerline_fonts = 1
-" let g:airline#extensions#tabline#enabled = 2
-" let g:airline#extensions#tabline#fnamemod = ':t'
 let g:airline#extensions#tabline#left_sep = ' '
 let g:airline#extensions#tabline#left_alt_sep = '|'
 let g:airline#extensions#tabline#right_sep = ' '
@@ -269,18 +244,41 @@ let g:airline_left_sep = ' '
 let g:airline_left_alt_sep = '|'
 let g:airline_right_sep = ' '
 let g:airline_right_alt_sep = '|'
-" let g:airline_theme= 'gruvbox'
 let g:airline_theme= 'kalisi'
-" let g:airline_theme= 'solarized'
-" let g:bufferline_echo = 0
 
 set background=dark
-" colorscheme solarized
 colorscheme kalisi
 " colorscheme gruvbox
-" let g:gruvbox_contrast_dark = 'hard'
+
+" YouComopleteMe
+let g:ycm_error_symbol = '✗'
+let g:ycm_warning_symbol = '⚠'
+let g:ycm_autoclose_preview_window_after_completion = 0
+let g:ycm_auto_trigger = 0
+let g:ycm_min_num_of_chars_for_completion = 3
+let g:ycm_min_num_identifier_candidate_chars = 3
+let g:ycm_global_ycm_extra_conf = '~/.config/nvim/.ycm_extra_conf.py'
+let g:ycm_allow_changing_updatetime = 0
+let g:ycm_key_list_select_completion = ['<TAB>', '<Down>']
+let g:ycm_key_list_previous_completion = ['<S-TAB>', '<Up>']
+let g:ycm_add_preview_to_completeopt = 1
+let g:ycm_always_populate_location_list = 1
+let g:ycm_filepath_completition_use_working_dir = 1
+let g:ycm_show_diagnostics_ui = 1
+let g:ycm_filetype_whitelist = { '*': 1 }
+" let g:ycm_key_invoke_completion = '<TAB>'
+let g:ycm_key_invoke_completion = '<C-SPACE>'
+let g:ycm_max_diagnostics_to_display = 5
+let g:ycm_complete_in_strings = 1
+let g:ycm_show_diagnostics_ui = 1
+" let g:ycm_filetype_specific_completion_to_disable = {
+      " \ 'gitcommit': 1,
+      " \ 'tex': 1
+      " \}
 
 " Tex
+" let g:tex_fast = ''
+" let g:tex_fast = 'Mp'
 let g:tex_flavor = 'latex'
 " let g:vimtex_view_method = 'mupdf'
 let g:vimtex_view_general_viewer = 'okular'
@@ -288,9 +286,9 @@ let g:vimtex_view_general_options = '--unique file:@pdf\#src:@line@tex'
 let g:vimtex_view_general_options_latexmk = '--unique'
 let g:vimtex_latexmk_options = '-pdf -verbose -file-line-error -interaction=nonstopmode -synctex=1 -recorder-'
 let g:vimtex_fold_enabled = 0
+let g:vimtex_fold_manual = 1
 let g:vimtex_quickfix_mode = 2
-let g:vimtex_quickfix_open_on_warning = 1
-let g:vimtex_toc_resize = 0
+let g:vimtex_quickfix_open_on_warning = 0
 
 if !exists('g:ycm_semantic_triggers')
   let g:ycm_semantic_triggers = {}
@@ -306,42 +304,19 @@ let g:ycm_semantic_triggers.tex = [
   \ 're!\\includestandalone(\s*\[[^]]*\])?\s*\{[^}]*',
   \ ]
 
-" let g:tex_flavor = 'latex'
-" " let g:LatexBox_latexmk_async = 1
-" let g:LatexBox_latexmk_preview_continuously = 1
-" let g:LatexBox_quickfix = 2
-" let g:LatexBox_viewer = "okular --unique"
-" " let g:LatexBox_latexmk_options = "-recorder-"
-" let g:LatexBox_latexmk_options = '-pdf -verbose -file-line-error -interaction=nonstopmode -synctex=1 -recorder-'
-
-" YouComopleteMe
-let g:ycm_error_symbol = '✗'
-let g:ycm_warning_symbol = '⚠'
-let g:ycm_autoclose_preview_window_after_completion = 0
-let g:ycm_auto_trigger = 3
-let g:ycm_min_num_of_chars_for_completion = 3
-let g:ycm_global_ycm_extra_conf = '~/.config/nvim/.ycm_extra_conf.py'
-let g:ycm_allow_changing_updatetime = 0
-let g:ycm_key_list_select_completion = ['<TAB>', '<Down>']
-let g:ycm_key_list_previous_completion = ['<S-TAB>', '<Up>']
-let g:ycm_add_preview_to_completeopt = 1
-let g:ycm_always_populate_location_list = 1
-let g:ycm_filepath_completition_use_working_dir = 1
-let g:ycm_show_diagnostics_ui = 1
-let g:ycm_filetype_whitelist = { '*': 1 }
-let g:ycm_key_invoke_completion = '<TAB>'
-let g:ycm_complete_in_strings = 1
+if !exists('g:deoplete#omni_patterns')
+    let g:deoplete#omni_patterns = {}
+endif
+let g:deoplete#omni_patterns.tex =
+            \ '\v\\%('
+            \ . '\a*cite\a*%(\s*\[[^]]*\]){0,2}\s*\{[^}]*'
+            \ . '|\a*ref%(\s*\{[^}]*|range\s*\{[^,}]*%(}\{)?)'
+            \ . '|hyperref\s*\[[^]]*'
+            \ . '|includegraphics\*?%(\s*\[[^]]*\]){0,2}\s*\{[^}]*'
+            \ . '|%(include%(only)?|input)\s*\{[^}]*'
+            \ . ')\m'
 
 nnoremap <F11> :YcmForceCompileAndDiagnostics <CR>
-
-" " Deopete
-" let g:deoplete#enable_at_startup = 1
-" " vim-clang
-" let g:clang_library_path='/usr/lib/'
-" let g:clang_compilation_database = './build'
-" let g:clang_c_options = ''
-" let g:clang_cpp_options = '-std=c++11'
-" let g:clang_include_sysheaders = 1
 
 " Add space gutter
 sign define dummy
@@ -360,9 +335,9 @@ let g:lt_location_list_toggle_map = '<leader>l'
 let g:lt_quickfix_list_toggle_map = '<leader>q'
 
 " R
-" let R_vsplit = 1
-let R_nvimpager = 'vertical'
+let R_nvimpager = 'horizontal'
 let R_assign = 0
+let R_rconsole_width = 100
 
 " Autoformat
 noremap <F3> :Autoformat<CR>
@@ -378,7 +353,7 @@ let g:autoformat_retab = 0
 let g:autoformat_remove_trailing_spaces = 0
 
 " NerdTree
-map <C-n> :NERDTreeToggle<CR>
+map <C-n> ;NERDTreeToggle<CR>
 
 " Autoformat
 let b:formatdef_custom_c='"astyle"'
@@ -396,11 +371,28 @@ let g:cpp_concepts_highlight = 1
 " let g:clamp_highlight_blacklist = ['clampNamespaceRef', 'clampFunctionDecl', 'clampFieldDecl', 'clampDeclRefExprCall', 'clampMemberRefExprCall', 'clampMemberRefExprVar', 'clampNamespace', 'clampNamespaceRef', 'cligherInclusionDirective', 'clampVarDecl']
 " let g:clamp_highlight_mode = 0
 
-" Utilsnips
-" Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
-" let g:UltiSnipsExpandTrigger="<tab>"
-let g:UltiSnipsJumpForwardTrigger="<c-b>"
-let g:UltiSnipsJumpBackwardTrigger="<c-z>"
-" If you want :UltiSnipsEdit to split your window.
-let g:UltiSnipsEditSplit="vertical"
+" Auto-pairs
+let g:AutoPairsMultilineClose = 0
+
+" " Neosnippet
+" " Plugin key-mappings.
+" " Note: It must be "imap" and "smap".  It uses <Plug> mappings.
+" imap <C-k>     <Plug>(neosnippet_expand_or_jump)
+" smap <C-k>     <Plug>(neosnippet_expand_or_jump)
+" xmap <C-k>     <Plug>(neosnippet_expand_target)
+
+" " SuperTab like snippets behavior.
+" " Note: It must be "imap" and "smap".  It uses <Plug> mappings.
+" imap <C-k>     <Plug>(neosnippet_expand_or_jump)
+" "imap <expr><TAB>
+" " \ pumvisible() ? "\<C-n>" :
+" " \ neosnippet#expandable_or_jumpable() ?
+" " \    "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
+" smap <expr><C-j> neosnippet#expandable_or_jumpable() ?
+" \ "\<Plug>(neosnippet_expand_or_jump)" : "\<C-j>"
+
+" " For conceal markers.
+" if has('conceal')
+  " set conceallevel=2 concealcursor=niv
+" endif
 
