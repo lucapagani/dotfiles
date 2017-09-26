@@ -18,7 +18,8 @@ BASE_FLAGS = [
     '-I/usr/lib/',
     '-I/usr/include/',
     '-I./include',
-    '-I../include'
+    '-I../include',
+    '-I/usr/include/eigen3'
 ]
 
 SOURCE_EXTENSIONS = [

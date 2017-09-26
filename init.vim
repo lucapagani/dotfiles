@@ -12,9 +12,9 @@ Plug 'kien/ctrlp.vim'
 " Autocomplete for python
 Plug 'davidhalter/jedi-vim', {'for': 'python'}
 " Remove extraneous whitespace when edit mode is exited
-Plug 'thirtythreeforty/lessspace.vim'
+" Plug 'thirtythreeforty/lessspace.vim'
 " Autocomplete
-Plug 'Valloric/YouCompleteMe', { 'do': './install.py --clang-completer' }
+Plug 'Valloric/YouCompleteMe', { 'do': './install.py --clang-completer  --system-libclang' }
 " Plug 'zchee/deoplete-clang', { 'for': 'tex' }
 " YouCompleteMe generator
 Plug 'rdnetto/YCM-Generator', { 'branch': 'stable'}
@@ -35,8 +35,10 @@ Plug 'freeo/vim-kalisi'
 Plug 'scrooloose/nerdcommenter'
 " Nerdtree
 Plug 'scrooloose/nerdtree'
-" Autopairs
-Plug 'jiangmiao/auto-pairs'
+" " Autopairs
+" Plug 'jiangmiao/auto-pairs'
+" DeliMate
+Plug 'Raimondi/delimitMate'
 " Doxygen
 Plug 'vim-scripts/DoxygenToolkit.vim'
 " ListToglle
@@ -49,7 +51,9 @@ Plug 'beloglazov/vim-online-thesaurus'
 " R
 Plug 'jalvesaq/Nvim-R', { 'for': 'r' }
 " Autoformat
-Plug 'Chiel92/vim-autoformat'
+" Plug 'Chiel92/vim-autoformat'
+" Neoformat
+Plug 'sbdchd/neoformat'
 " Close buffers
 Plug 'qpkorr/vim-bufkill'
 " " Utilsnips
@@ -59,17 +63,12 @@ Plug 'SirVer/ultisnips'
 " Plug 'Shougo/neosnippet-snippets'
 " Snippets are separated from the engine. Add this if you want them:
 Plug 'honza/vim-snippets'
-" " Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
-let g:UltiSnipsExpandTrigger = "<c-j>"
-let g:UltiSnipsJumpForwardTrigger = "<c-j>"
-let g:UltiSnipsJumpBackwardTrigger = "<c-k>"
-" If you want :UltiSnipsEdit to split your window.
-let g:UltiSnipsEditSplit="vertical"
-let g:UltiSnipsUsePythonVersion = 2
 " Denite
 Plug 'Shougo/denite.nvim'
 " Debug
 Plug 'critiqjo/lldb.nvim'
+" Vimux
+Plug 'benmills/vimux'
 
 " After all plugins...
 call plug#end()
@@ -245,6 +244,7 @@ let g:airline_left_alt_sep = '|'
 let g:airline_right_sep = ' '
 let g:airline_right_alt_sep = '|'
 let g:airline_theme= 'kalisi'
+let g:airline#extensions#tabline#buffer_nr_show = 1
 
 set background=dark
 colorscheme kalisi
@@ -254,7 +254,7 @@ colorscheme kalisi
 let g:ycm_error_symbol = '✗'
 let g:ycm_warning_symbol = '⚠'
 let g:ycm_autoclose_preview_window_after_completion = 0
-let g:ycm_auto_trigger = 0
+" let g:ycm_auto_trigger = 0
 let g:ycm_min_num_of_chars_for_completion = 3
 let g:ycm_min_num_identifier_candidate_chars = 3
 let g:ycm_global_ycm_extra_conf = '~/.config/nvim/.ycm_extra_conf.py'
@@ -340,39 +340,37 @@ let R_assign = 0
 let R_rconsole_width = 100
 
 " Autoformat
-noremap <F3> :Autoformat<CR>
+" noremap <F3> :Autoformat<CR>
 
-let b:formatdef_custom_cpp='"astyle --mode=c -A14 --indent=spaces=2"'
-let b:formatters_cpp = ['custom_cpp']
+" let b:formatdef_custom_cpp='"astyle --mode=c -A14 --indent=spaces=2 --align-pointer=name"'
+" let b:formatters_cpp = ['custom_cpp']
 
-let b:formatdef_custom_c='"astyle --mode=c -A14 --indent=spaces=2"'
-let b:formatters_c = ['custom_c']
+" let b:formatdef_custom_c='"astyle --mode=c -A14 --indent=spaces=2 --align-pointer=name"'
+" let b:formatters_c = ['custom_c']
 
-let g:autoformat_autoindent = 0
-let g:autoformat_retab = 0
-let g:autoformat_remove_trailing_spaces = 0
+" let g:autoformat_autoindent = 0
+" let g:autoformat_retab = 0
+" let g:autoformat_remove_trailing_spaces = 0
+
+" Neoformat
+noremap <F3> :Neoformat<CR>
+
+let g:neoformat_enabled_cpp = ['astyle']
 
 " NerdTree
 map <C-n> ;NERDTreeToggle<CR>
-
-" Autoformat
-let b:formatdef_custom_c='"astyle"'
-let b:formatters_c = ['custom_c']
-let b:formatdef_custom_cpp = '"astyle"'
-let b:formatters_cpp = ['custom_cpp']
 
 " C++ color
 let g:cpp_class_scope_highlight = 1
 let g:cpp_experimental_template_highlight = 1
 let g:cpp_concepts_highlight = 1
 
-" Clamp
-" let g:clamp_autostart = 1
-" let g:clamp_highlight_blacklist = ['clampNamespaceRef', 'clampFunctionDecl', 'clampFieldDecl', 'clampDeclRefExprCall', 'clampMemberRefExprCall', 'clampMemberRefExprVar', 'clampNamespace', 'clampNamespaceRef', 'cligherInclusionDirective', 'clampVarDecl']
-" let g:clamp_highlight_mode = 0
-
 " Auto-pairs
 let g:AutoPairsMultilineClose = 0
+
+" DeliMate
+let delimitMate_expand_cr = 2
+let delimitMate_expand_space = 1
 
 " " Neosnippet
 " " Plugin key-mappings.
@@ -395,4 +393,17 @@ let g:AutoPairsMultilineClose = 0
 " if has('conceal')
   " set conceallevel=2 concealcursor=niv
 " endif
+
+" nvim-R
+let R_in_buffer = 0
+let R_applescript = 0
+let R_tmux_split = 1
+
+" Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
+let g:UltiSnipsExpandTrigger = "<c-j>"
+let g:UltiSnipsJumpForwardTrigger = "<c-j>"
+let g:UltiSnipsJumpBackwardTrigger = "<c-k>"
+" If you want :UltiSnipsEdit to split your window.
+let g:UltiSnipsEditSplit="vertical"
+" let g:UltiSnipsUsePythonVersion = 2
 
