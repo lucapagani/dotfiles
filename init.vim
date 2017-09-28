@@ -275,6 +275,12 @@ let g:ycm_show_diagnostics_ui = 1
       " \ 'gitcommit': 1,
       " \ 'tex': 1
       " \}
+nnoremap <leader>jt :YcmCompleter GetType<CR>
+nnoremap <leader>jg :YcmCompleter GoTo<CR>
+nnoremap <leader>jd :YcmCompleter GoToDeclaration<CR>
+nnoremap <leader>ji :YcmCompleter GoToInclude<CR>
+nnoremap <leader>jf :YcmCompleter FixIt<CR>
+nnoremap <F11> :YcmForceCompileAndDiagnostics <CR>
 
 " Tex
 " let g:tex_fast = ''
@@ -315,8 +321,6 @@ let g:deoplete#omni_patterns.tex =
             \ . '|includegraphics\*?%(\s*\[[^]]*\]){0,2}\s*\{[^}]*'
             \ . '|%(include%(only)?|input)\s*\{[^}]*'
             \ . ')\m'
-
-nnoremap <F11> :YcmForceCompileAndDiagnostics <CR>
 
 " Add space gutter
 sign define dummy
