@@ -67,6 +67,8 @@ Plug 'honza/vim-snippets'
 Plug 'Shougo/denite.nvim'
 " Debug
 Plug 'critiqjo/lldb.nvim'
+" Tslime
+Plug 'jgdavey/tslime.vim'
 " Vimux
 Plug 'benmills/vimux'
 
@@ -410,4 +412,11 @@ let g:UltiSnipsJumpBackwardTrigger = "<c-k>"
 " If you want :UltiSnipsEdit to split your window.
 let g:UltiSnipsEditSplit="vertical"
 " let g:UltiSnipsUsePythonVersion = 2
+
+" Tslime
+let g:tslime_always_current_session = 1 
+let g:tslime_always_current_window = 1
+vmap <leader>ss <Plug>SendSelectionToTmux
+nmap <leader>ss <Plug>NormalModeSendToTmux
+nmap <leader>sr <Plug>SetTmuxVars
 
