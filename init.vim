@@ -67,21 +67,23 @@ Plug 'honza/vim-snippets'
 Plug 'Shougo/denite.nvim'
 " Debug
 Plug 'critiqjo/lldb.nvim'
-" Tslime
-Plug 'jgdavey/tslime.vim'
+" " Tslime
+" Plug 'jgdavey/tslime.vim'
 " Vimux
 Plug 'benmills/vimux'
+" Vim-slime
+Plug 'jpalardy/vim-slime'
 
 " After all plugins...
 call plug#end()
 
-" Map : to ;
-noremap ; :
-noremap : ;
-
 " Map the leader key to SPACE
 let mapleader="\<SPACE>"
 let maplocalleader="\<SPACE>"
+
+" Map : to ;
+noremap ; :
+noremap : ;
 
 " Omnicomplete
 set omnifunc=syntaxcomplete#Complete
@@ -419,4 +421,14 @@ let g:tslime_always_current_window = 1
 vmap <leader>ss <Plug>SendSelectionToTmux
 nmap <leader>ss <Plug>NormalModeSendToTmux
 nmap <leader>sr <Plug>SetTmuxVars
+
+" Vim-slime
+let g:slime_target = "tmux"
+let g:slime_python_ipython = 1
+" let g:slime_paste_file = "$HOME/.slime_paste"
+let g:slime_default_config = {"socket_name": split($TMUX, ",")[0], "target_pane": ":.1"}
+let g:slime_no_mappings = 1
+xmap <leader>ss <Plug>SlimeRegionSend
+nmap <leader>ss <Plug>SlimeMotionSend
+nmap <leader>ss <Plug>SlimeLineSend
 
