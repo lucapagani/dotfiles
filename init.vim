@@ -10,7 +10,7 @@ Plug 'easymotion/vim-easymotion'
 " Ctrl-P - Fuzzy file search
 Plug 'kien/ctrlp.vim'
 " Autocomplete for python
-Plug 'davidhalter/jedi-vim', {'for': 'python'}
+" Plug 'davidhalter/jedi-vim', {'for': 'python'}
 " Remove extraneous whitespace when edit mode is exited
 " Plug 'thirtythreeforty/lessspace.vim'
 " Autocomplete
@@ -73,6 +73,10 @@ Plug 'critiqjo/lldb.nvim'
 Plug 'benmills/vimux'
 " Vim-slime
 Plug 'jpalardy/vim-slime'
+" Semantic highlight
+Plug 'jaxbot/semantic-highlight.vim'
+" Flake8
+Plug 'nvie/vim-flake8'
 
 " After all plugins...
 call plug#end()
@@ -431,4 +435,8 @@ let g:slime_no_mappings = 1
 xmap <leader>ss <Plug>SlimeRegionSend
 nmap <leader>ss <Plug>SlimeMotionSend
 nmap <leader>ss <Plug>SlimeLineSend
+
+" Semantic highlight
+nnoremap <Leader>st :SemanticHighlightToggle<cr>
+" let g:semanticTermColors = [28,1,2,3,4,5,6,7,25,9,10,34,12,13,14,15,16,125,124,19]
 
