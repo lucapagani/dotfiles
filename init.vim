@@ -56,7 +56,7 @@ Plug 'jalvesaq/Nvim-R', { 'for': 'r' }
 Plug 'sbdchd/neoformat'
 " Close buffers
 Plug 'qpkorr/vim-bufkill'
-" " Utilsnips
+" Utilsnips
 Plug 'SirVer/ultisnips'
 " " Neosnippet
 " Plug 'Shougo/neosnippet'
@@ -99,6 +99,8 @@ let g:jedi#show_call_signatures = "0"
 let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 
 " autocmd FileType * setlocal formatoptions-=ro
+" au FileType c,cpp setlocal comments-=:// comments+=f://
+setlocal formatoptions-=c formatoptions-=r formatoptions-=o
 
 syntax on
 set showcmd             " Show (partial) command in status line.
@@ -233,6 +235,12 @@ nnoremap <A-h> <C-w>h
 nnoremap <A-j> <C-w>j
 nnoremap <A-k> <C-w>k
 nnoremap <A-l> <C-w>l
+
+" Remap go to begin and end of function
+nnoremap [[ ?{<CR>w99[{
+nnoremap ][ /}<CR>b99]}
+nnoremap ]] j0[[%/{<CR>
+nnoremap [] k$][%?}<CR>
 
 " Airline
 set laststatus=2
@@ -417,7 +425,7 @@ let g:UltiSnipsJumpForwardTrigger = "<c-j>"
 let g:UltiSnipsJumpBackwardTrigger = "<c-k>"
 " If you want :UltiSnipsEdit to split your window.
 let g:UltiSnipsEditSplit="vertical"
-" let g:UltiSnipsUsePythonVersion = 2
+let g:UltiSnipsSnippetDirectories = ['~/.config/nvim/UltiSnips', 'UltiSnips']
 
 " Tslime
 let g:tslime_always_current_session = 1 

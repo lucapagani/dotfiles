@@ -43,6 +43,7 @@ alias cmake="cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=on"
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib:/usr/local/lib64/
 export FT2_SUBPIXEL_HINTING=1  # Infinality mode
 export CXXFLAGS=$CXXFLAGS" -std=c++14"
+export PATH=$PATH:/opt/anaconda/bin/:/opt/cuda/bin/
 
 # If not running interactively, do not do anything
 [[ $- != *i* ]] && return
