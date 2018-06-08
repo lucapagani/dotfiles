@@ -50,6 +50,10 @@ Plug 'sigidagi/vim-cmake-project', { 'frozen': 1 }
 Plug 'beloglazov/vim-online-thesaurus'
 " R
 Plug 'jalvesaq/Nvim-R', { 'for': 'r' }
+Plug 'roxma/nvim-completion-manager', { 'for': 'r' }
+Plug 'gaalcaras/ncm-R', { 'for': 'r' }
+" R linter
+Plug 'w0rp/ale', { 'for': 'r' }
 " Autoformat
 " Plug 'Chiel92/vim-autoformat'
 " Neoformat
@@ -77,6 +81,10 @@ Plug 'jpalardy/vim-slime'
 Plug 'jaxbot/semantic-highlight.vim'
 " Flake8
 Plug 'nvie/vim-flake8'
+" BufOnly
+Plug 'vim-scripts/BufOnly.vim', { 'frozen': 1 }
+" Dash
+Plug 'rizzatti/dash.vim'
 
 " After all plugins...
 call plug#end()
@@ -415,9 +423,11 @@ let delimitMate_expand_space = 1
 " endif
 
 " nvim-R
-let R_in_buffer = 0
+let R_in_buffer = 1
 let R_applescript = 0
-let R_tmux_split = 1
+let R_nvimpager = "no"
+let R_notmuxconf = 1
+let R_min_editor_width = 18
 
 " Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
 let g:UltiSnipsExpandTrigger = "<c-j>"
@@ -447,4 +457,11 @@ nmap <leader>ss <Plug>SlimeLineSend
 " Semantic highlight
 nnoremap <Leader>st :SemanticHighlightToggle<cr>
 " let g:semanticTermColors = [28,1,2,3,4,5,6,7,25,9,10,34,12,13,14,15,16,125,124,19]
+
+" Ale
+let g:ale_sign_error = '✗'
+let g:ale_sign_warning = '⚠'
+let g:ale_lint_delay = 200
+highlight clear ALEWarningSign
+let g:ale_r_lintr_options = "with_defaults(assignment_linter = NULL, camel_case_linter = NULL, snake_case_linter = NULL, absolute_paths_linter = NULL, spaces_inside_linter = NULL, line_length_linter(999))"
 
