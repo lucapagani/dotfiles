@@ -39,6 +39,7 @@ alias ll="ls -lrt"
 alias vim="nvim"
 alias gconftool="gconftool-2"
 alias cmake="cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=on"
+alias cmake-win="cmake -D GNU_HOST=x86_64-w64-mingw32 -D CMAKE_TOOLCHAIN_FILE=~/Toolchain-mingw32.cmake"
 
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib:/usr/local/lib64/
 export FT2_SUBPIXEL_HINTING=1  # Infinality mode

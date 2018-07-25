@@ -53,7 +53,7 @@ Plug 'jalvesaq/Nvim-R', { 'for': 'r' }
 Plug 'roxma/nvim-completion-manager', { 'for': 'r' }
 Plug 'gaalcaras/ncm-R', { 'for': 'r' }
 " R linter
-Plug 'w0rp/ale', { 'for': 'r' }
+Plug 'w0rp/ale', { 'for': ['r', 'tex'] }
 " Autoformat
 " Plug 'Chiel92/vim-autoformat'
 " Neoformat
@@ -85,6 +85,12 @@ Plug 'nvie/vim-flake8'
 Plug 'vim-scripts/BufOnly.vim', { 'frozen': 1 }
 " Dash
 Plug 'rizzatti/dash.vim'
+" Autoreload
+Plug 'TheZoq2/neovim-auto-autoread'
+" Tagbar
+Plug 'majutsushi/tagbar'
+" " A
+" Plug 'vim-scripts/a.vim'
 
 " After all plugins...
 call plug#end()
@@ -122,9 +128,12 @@ set expandtab           " Insert spaces when TAB is pressed.
 set tabstop=2           " Render TABs using this many spaces.
 set shiftwidth=2        " Indentation amount for < and > commands.
 set updatetime=500      " Set update time
+" set ttimeoutlen=50      " Set timeout space
 set clipboard+=unnamed   " Unnamed register
 set mouse=a             " Enable mouse
 set hid
+au CursorHold * checktime
+" set guicursor=
 
 set noerrorbells        " No beeps.
 set modeline            " Enable modeline.
@@ -252,21 +261,21 @@ nnoremap [] k$][%?}<CR>
 
 " Airline
 set laststatus=2
-" let g:airline_powerline_fonts = 1                           " Use Powerline fonts to show beautiful symbols
+let g:airline_powerline_fonts = 1                           " Use Powerline fonts to show beautiful symbols
 let g:airline_inactive_collapse = 0                         " Do not collapse the status line while having multiple windows
 let g:airline#extensions#whitespace#enabled = 0             " Do not check for whitespaces
 let g:airline#extensions#tabline#enabled = 1                " Display tab bar with buffers
 let g:airline#extensions#branch#enabled = 1                 " Enable Git client integration
 let g:airline#extensions#tagbar#enabled = 1                 " Enable Tagbar integration
 let g:airline#extensions#hunks#enabled = 1                  " Enable Git hunks integration
-let g:airline#extensions#tabline#left_sep = ' '
-let g:airline#extensions#tabline#left_alt_sep = '|'
-let g:airline#extensions#tabline#right_sep = ' '
-let g:airline#extensions#tabline#right_alt_sep = '|'
-let g:airline_left_sep = ' '
-let g:airline_left_alt_sep = '|'
-let g:airline_right_sep = ' '
-let g:airline_right_alt_sep = '|'
+" let g:airline#extensions#tabline#left_sep = ' '
+" let g:airline#extensions#tabline#left_alt_sep = '|'
+" let g:airline#extensions#tabline#right_sep = ' '
+" let g:airline#extensions#tabline#right_alt_sep = '|'
+" let g:airline_left_sep = ' '
+" let g:airline_left_alt_sep = '|'
+" let g:airline_right_sep = ' '
+" let g:airline_right_alt_sep = '|'
 let g:airline_theme= 'kalisi'
 let g:airline#extensions#tabline#buffer_nr_show = 1
 
@@ -295,6 +304,8 @@ let g:ycm_key_invoke_completion = '<C-SPACE>'
 let g:ycm_max_diagnostics_to_display = 5
 let g:ycm_complete_in_strings = 1
 let g:ycm_show_diagnostics_ui = 1
+let g:ycm_confirm_extra_conf = 0
+" let g:ycm_filetype_blacklist = ['r', 'tex']
 " let g:ycm_filetype_specific_completion_to_disable = {
       " \ 'gitcommit': 1,
       " \ 'tex': 1
@@ -464,4 +475,22 @@ let g:ale_sign_warning = '⚠'
 let g:ale_lint_delay = 200
 highlight clear ALEWarningSign
 let g:ale_r_lintr_options = "with_defaults(assignment_linter = NULL, camel_case_linter = NULL, snake_case_linter = NULL, absolute_paths_linter = NULL, spaces_inside_linter = NULL, line_length_linter(999))"
+" let g:ale_completion_enabled = 1
 
+" " lldb.nvim
+" nmap <M-b> <Plug>LLBreakSwitch
+" vmap <F2> <Plug>LLStdInSelected
+" nnoremap <F4> :LLstdin<CR>
+" nnoremap <F5> :LLmode debug<CR>
+" nnoremap <S-F5> :LLmode code<CR>
+" nnoremap <F7> :LL process launch<CR>
+" nnoremap <S-F7> :LL process interrupt<CR>
+" nnoremap <F8> :LL continue<CR>
+" nnoremap <F9> :LL print <C-R>=expand('<cword>')<CR>
+" " vnoremap <F9> :<C-U>LL print <C-R>=lldb#util#get_selection()<CR><CR>
+
+"Autoreload files when changed externally
+set autoread
+
+" Tagbar
+nnoremap <F8> :TagbarToggle<CR>
