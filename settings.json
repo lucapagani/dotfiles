@@ -1,0 +1,10 @@
+{
+    "editor.tabSize": 2,
+    "editor.wordWrap": "on",
+    "editor.fontSize": 13,
+    "editor.minimap.enabled": false,
+    "cmake.configureOnOpen": false,
+    "keyboard.dispatch": "keyCode",
+    "cmake-tools-helper.cmake_download_path": "/home/luca/.vscode/extensions/maddouri.cmake-tools-helper-0.2.1/cmake_download",
+    "window.zoomLevel": 0
+}
