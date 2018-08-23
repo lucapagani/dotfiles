@@ -91,6 +91,10 @@ Plug 'TheZoq2/neovim-auto-autoread'
 Plug 'majutsushi/tagbar'
 " " A
 " Plug 'vim-scripts/a.vim'
+" Vim-repeat
+Plug 'tpope/vim-repeat'
+" Cosco.vim
+Plug 'lfilho/cosco.vim'
 
 " After all plugins...
 call plug#end()
@@ -494,3 +498,8 @@ set autoread
 
 " Tagbar
 nnoremap <F8> :TagbarToggle<CR>
+
+" Cosco.vim
+nmap <silent> <c-d> <Plug>(cosco-commaOrSemiColon)
+imap <silent> <c-d> <c-o><Plug>(cosco-commaOrSemiColon)
+
