@@ -53,7 +53,8 @@ Plug 'jalvesaq/Nvim-R', { 'for': 'r' }
 Plug 'roxma/nvim-completion-manager', { 'for': 'r' }
 Plug 'gaalcaras/ncm-R', { 'for': 'r' }
 " R linter
-Plug 'w0rp/ale', { 'for': ['r', 'tex'] }
+" Plug 'w0rp/ale', { 'for': ['r', 'tex'] }
+Plug 'w0rp/ale', { 'for': ['r'] }
 " Autoformat
 " Plug 'Chiel92/vim-autoformat'
 " Neoformat
@@ -188,7 +189,7 @@ set lbr
 
 " Spell check on
 set spell
-set spelllang=en_gb
+set spelllang=en_us
 " Remove spell check in terminal
 augroup terminal
   autocmd TermOpen * setlocal nospell
@@ -291,7 +292,7 @@ colorscheme kalisi
 let g:ycm_error_symbol = '✗'
 let g:ycm_warning_symbol = '⚠'
 let g:ycm_autoclose_preview_window_after_completion = 0
-" let g:ycm_auto_trigger = 0
+let g:ycm_auto_trigger = 1
 let g:ycm_min_num_of_chars_for_completion = 3
 let g:ycm_min_num_identifier_candidate_chars = 3
 let g:ycm_global_ycm_extra_conf = '~/.config/nvim/.ycm_extra_conf.py'
@@ -305,8 +306,7 @@ let g:ycm_show_diagnostics_ui = 1
 let g:ycm_filetype_whitelist = { '*': 1 }
 " let g:ycm_key_invoke_completion = '<TAB>'
 let g:ycm_key_invoke_completion = '<C-SPACE>'
-let g:ycm_max_diagnostics_to_display = 5
-let g:ycm_complete_in_strings = 1
+
 let g:ycm_show_diagnostics_ui = 1
 let g:ycm_confirm_extra_conf = 0
 " let g:ycm_filetype_blacklist = ['r', 'tex']
@@ -319,7 +319,7 @@ nnoremap <leader>jg :YcmCompleter GoTo<CR>
 nnoremap <leader>jd :YcmCompleter GoToDeclaration<CR>
 nnoremap <leader>ji :YcmCompleter GoToInclude<CR>
 nnoremap <leader>jf :YcmCompleter FixIt<CR>
-nnoremap <F11> :YcmForceCompileAndDiagnostics <CR>
+nnoremap <F12> :YcmForceCompileAndDiagnostics <CR>
 
 " Tex
 " let g:tex_fast = ''
@@ -329,7 +329,8 @@ let g:tex_flavor = 'latex'
 let g:vimtex_view_general_viewer = 'okular'
 let g:vimtex_view_general_options = '--unique file:@pdf\#src:@line@tex'
 let g:vimtex_view_general_options_latexmk = '--unique'
-let g:vimtex_latexmk_options = '-pdf -verbose -file-line-error -interaction=nonstopmode -synctex=1 -recorder-'
+" let g:vimtex_latexmk_options = '-pdf -verbose -file-line-error -interaction=nonstopmode -synctex=1 -recorder-'
+let g:vimtex_latexmk_options = '-pdf -verbose -file-line-error -interaction=nonstopmode -synctex=1'
 let g:vimtex_fold_enabled = 0
 let g:vimtex_fold_manual = 1
 let g:vimtex_quickfix_mode = 2
@@ -338,16 +339,17 @@ let g:vimtex_quickfix_open_on_warning = 0
 if !exists('g:ycm_semantic_triggers')
   let g:ycm_semantic_triggers = {}
 endif
-let g:ycm_semantic_triggers.tex = [
-  \ 're!\\[A-Za-z]*cite[A-Za-z]*(\[[^]]*\]){0,2}{[^}]*',
-  \ 're!\\[A-Za-z]*ref({[^}]*|range{([^,{}]*(}{)?))',
-  \ 're!\\hyperref\[[^]]*',
-  \ 're!\\includegraphics\*?(\[[^]]*\]){0,2}{[^}]*',
-  \ 're!\\(include(only)?|input){[^}]*',
-  \ 're!\\\a*(gls|Gls|GLS)(pl)?\a*(\s*\[[^]]*\]){0,2}\s*\{[^}]*',
-  \ 're!\\includepdf(\s*\[[^]]*\])?\s*\{[^}]*',
-  \ 're!\\includestandalone(\s*\[[^]]*\])?\s*\{[^}]*',
-  \ ]
+au VimEnter *.tex let g:ycm_semantic_triggers.tex=g:vimtex#re#youcompleteme
+" let g:ycm_semantic_triggers.tex = [
+  " \ 're!\\[A-Za-z]*cite[A-Za-z]*(\[[^]]*\]){0,2}{[^}]*',
+  " \ 're!\\[A-Za-z]*ref({[^}]*|range{([^,{}]*(}{)?))',
+  " \ 're!\\hyperref\[[^]]*',
+  " \ 're!\\includegraphics\*?(\[[^]]*\]){0,2}{[^}]*',
+  " \ 're!\\(include(only)?|input){[^}]*',
+  " \ 're!\\\a*(gls|Gls|GLS)(pl)?\a*(\s*\[[^]]*\]){0,2}\s*\{[^}]*',
+  " \ 're!\\includepdf(\s*\[[^]]*\])?\s*\{[^}]*',
+  " \ 're!\\includestandalone(\s*\[[^]]*\])?\s*\{[^}]*',
+  " \ ]
 
 if !exists('g:deoplete#omni_patterns')
     let g:deoplete#omni_patterns = {}

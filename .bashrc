@@ -43,10 +43,37 @@ alias cmake-win="cmake -D GNU_HOST=x86_64-w64-mingw32 -D CMAKE_TOOLCHAIN_FILE=~/
 
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib:/usr/local/lib64/
 export FT2_SUBPIXEL_HINTING=1  # Infinality mode
-# export CXXFLAGS=$CXXFLAGS" -std=c++14"
 export PATH=$PATH:/opt/anaconda/bin/:/opt/cuda/bin/
+
+export PETSC_DIR=/opt/petsc/linux-c-opt/
+export PETSC_ARCH=""
+export PATH=${PATH}:${PETSC_DIR}/lib:${PETSC_DIR}/bin
+export PATH="/home/luca/opt/anaconda3/bin:$PATH"
+
+export SLEPC_DIR=/opt/slepc/linux-c-opt/
+export SLEPC_ARCH=""
+export PATH=${PATH}:${SLEPC_DIR}/lib:${SLEPC_DIR}/bin
+
+export MPI_CC=/opt/intel/compilers_and_libraries_2018.3.222/linux/mpi/intel64/bin/mpicc
+export MPI_CXX=/opt/intel/compilers_and_libraries_2018.3.222/linux/mpi/intel64/bin/mpicxx
 
 # If not running interactively, do not do anything
 [[ $- != *i* ]] && return
 [[ -z "$TMUX" ]] && exec tmux
 
+# # added by Anaconda3 2018.12 installer
+# # >>> conda init >>>
+# # !! Contents within this block are managed by 'conda init' !!
+# __conda_setup="$(CONDA_REPORT_ERRORS=false '/home/luca/opt/anaconda3/bin/conda' shell.bash hook 2> /dev/null)"
+# if [ $? -eq 0 ]; then
+    # \eval "$__conda_setup"
+# else
+    # if [ -f "/home/luca/opt/anaconda3/etc/profile.d/conda.sh" ]; then
+        # . "/home/luca/opt/anaconda3/etc/profile.d/conda.sh"
+        # CONDA_CHANGEPS1=false conda activate base
+    # else
+        # \export PATH="/home/luca/opt/anaconda3/bin:$PATH"
+    # fi
+# fi
+# unset __conda_setup
+# # <<< conda init <<<
