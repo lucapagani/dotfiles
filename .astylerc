@@ -1,0 +1,4 @@
+--style=google
+--indent=spaces=2
+--convert-tabs
+--close-templates
