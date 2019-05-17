@@ -2,3 +2,9 @@
 --indent=spaces=2
 --convert-tabs
 --close-templates
+--align-pointer=name 
+--align-reference=name 
+--pad-paren 
+--pad-oper
+--indent-col1-comments
+--close-templates
