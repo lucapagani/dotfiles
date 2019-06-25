@@ -11,6 +11,9 @@
     "C_Cpp.default.cppStandard": "c++17",
     "C_Cpp.default.intelliSenseMode": "clang-x64",
     "C_Cpp.default.cStandard": "c11",
+    "C_Cpp.formatting" : "disabled",
+    "C_Cpp.clang_format_style": "{BasedOnStyle: Google, IndentWidth: 2, AlignConsecutiveAssignments: false, SpaceAfterCStyleCast: true, SpaceBeforeAssignmentOperators: true, SpacesInContainerLiterals: true, SpacesInParentheses: true, SpacesInSquareBrackets: true, ColumnLimit: 999, SpaceBeforeRangeBasedForLoopColon: true, SpaceBeforeParens: Always, AlignAfterOpenBracket: AlwaysBreak, AllowAllParametersOfDeclarationOnNextLine: false, BinPackArguments: false, BinPackParameters: false, AllowShortLoopsOnASingleLine: false}",
+    "C_Cpp.updateChannel": "Insiders",
     // "cmake.buildBeforeRun": false,
     // "cmake.parseBuildDiagnostics": false,
     "vim.easymotion": true,
@@ -80,8 +83,6 @@
         "terminal.ansiBrightCyan": "#14f0f0",
         "terminal.ansiBrightWhite": "#e9ebeb",
     },
-    // "python.pythonPath": "/home/luca/opt/anaconda3/bin/python",
-    "python.dataScience.sendSelectionToInteractiveWindow": true,
     "python.condaPath": "/home/luca/opt/anaconda3/bin/",
     "python.jediEnabled": false,
     "python.formatting.yapfArgs": [
@@ -90,8 +91,6 @@
     ],
     "python.formatting.provider": "yapf",
     "spellright.notificationClass": "information",
-    "C_Cpp.clang_format_style": "{BasedOnStyle: Google, IndentWidth: 2, AlignConsecutiveAssignments: false, SpaceAfterCStyleCast: true, SpaceBeforeAssignmentOperators: true, SpacesInContainerLiterals: true, SpacesInParentheses: true, SpacesInSquareBrackets: true, ColumnLimit: 999, SpaceBeforeRangeBasedForLoopColon: true, SpaceBeforeParens: Always, AlignAfterOpenBracket: AlwaysBreak, AllowAllParametersOfDeclarationOnNextLine: false, BinPackArguments: false, BinPackParameters: false, AllowShortLoopsOnASingleLine: false}",
-    "C_Cpp.updateChannel": "Insiders",
     "spellright.language": [
         "English (American)"
     ],
@@ -107,5 +106,35 @@
             "%PDF%"
         ]
     },
-    "window.zoomLevel": 0
+    "window.zoomLevel": 0,
+    "cmake.configureOnOpen": false,
+    "cmake.generator": "Unix Makefiles",
+    "latex-workshop.view.pdf.viewer": "external",
+    "python.dataScience.sendSelectionToInteractiveWindow": true,
+    "http.proxy": "http://wwwproxy.hud.ac.uk:3128/",
+    "C_Cpp.intelliSenseCacheSize": 0,
+    "cSpell.enabledLanguageIds": [
+        "git-commit",
+        "html",
+        "jade",
+        "java",
+        "javascript",
+        "javascriptreact",
+        "json",
+        "jsonc",
+        "less",
+        "markdown",
+        "php",
+        "plaintext",
+        "pug",
+        "restructuredtext",
+        "rust",
+        "scala",
+        "scss",
+        "text",
+        "typescript",
+        "typescriptreact",
+        "yaml",
+        "yml"
+    ]
 }
